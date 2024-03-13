@@ -5,9 +5,10 @@ import { UsersController } from './modules/users/users.controller';
 import { UsersModule } from './modules/users/users.module';
 import { ProductModule } from './modules/product/product.module';
 import { SalesModule } from './modules/sales/sales.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
-  imports: [UsersModule, ProductModule, SalesModule],
+  imports: [UsersModule, ProductModule, SalesModule, AuthModule],
   controllers: [AppController, UsersController],
   providers: [AppService],
 })

@@ -45,6 +45,14 @@ export class UsersService {
     });
   }
 
+  async findByLogin(login: string) {
+    return await this.prisma.users.findFirst({
+      where: {
+        login,
+      },
+    });
+  }
+
   async update(id: string, user: UpdateUserDto) {
     return await this.prisma.users.update({
       where: {
