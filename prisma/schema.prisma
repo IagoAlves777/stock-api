@@ -19,6 +19,7 @@ model users {
   name     String
   password String
   role     Role   @default(USER)
+  sale     sale[]
 }
 
 model product {
@@ -33,7 +34,9 @@ model sale {
   id           String         @id @default(uuid())
   date         DateTime       @db.Timestamp(6)
   total        Decimal
+  user_id      String
   sale_product sale_product[]
+  user         users          @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model sale_product {

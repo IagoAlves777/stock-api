@@ -31,6 +31,11 @@ export class CreateSaleDto {
   })
   total: number;
 
+  @ApiProperty({
+    example: '18a101a7-bd91-4109-bff8-ffc2e2c74d2e',
+  })
+  userId: string;
+
   @IsNotEmpty()
   @ApiProperty({ isArray: true, type: Product })
   products: {

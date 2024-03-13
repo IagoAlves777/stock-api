@@ -11,6 +11,7 @@ export class SalesService {
         data: {
           date: new Date(sale.date),
           total: sale.total,
+          user_id: sale.userId,
         },
       });
 
