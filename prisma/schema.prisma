@@ -37,7 +37,7 @@ model sale {
 }
 
 model sale_product {
-  sale_product_id BigInt  @id
+  sale_product_id String  @id @default(uuid())
   amount          Int
   product_id      String
   sale_id         String
