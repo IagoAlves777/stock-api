@@ -1,7 +1,10 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { LoginDTO } from './dto/login.dto';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
+
+import { Request } from 'express';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -13,5 +16,12 @@ export class AuthController {
     const { login, password } = user;
 
     return this.authService.login(login, password);
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Get('current-user')
+  async getCurrentUser(@Req() request: Request) {
+    return this.authService.getCurrentUser(request.user?.id);
   }
 }

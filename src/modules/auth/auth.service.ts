@@ -1,5 +1,9 @@
 import { UsersService } from '@modules/users/users.service';
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { HashService } from '@shared/hash/hash.service';
 
@@ -36,6 +40,18 @@ export class AuthService {
     return {
       user: payload,
       accessToken: this.jwtService.sign(payload),
+    };
+  }
+
+  async getCurrentUser(userId: string) {
+    const user = this.usersService.findById(userId);
+
+    if (!user) {
+      throw new UnauthorizedException();
+    }
+
+    return {
+      user,
     };
   }
 }
