@@ -38,11 +38,22 @@ export class UsersService {
   }
 
   async findById(id: string) {
-    return await this.prisma.users.findUnique({
-      where: {
-        id: id,
-      },
-    });
+    try {
+      if (!id) {
+        throw new BadRequestException();
+      }
+
+      return await this.prisma.users.findUnique({
+        where: {
+          id: id,
+        },
+      });
+    } catch (error) {
+      throw new BadRequestException({
+        statusCode: 400,
+        error: error.message,
+      });
+    }
   }
 
   async findByLogin(login: string) {

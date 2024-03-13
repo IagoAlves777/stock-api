@@ -32,6 +32,7 @@ export class AuthService {
     }
 
     const payload = {
+      id: user.id,
       login: user.login,
       name: user.name,
       role: user.role,
@@ -44,14 +45,12 @@ export class AuthService {
   }
 
   async getCurrentUser(userId: string) {
-    const user = this.usersService.findById(userId);
+    const user = await this.usersService.findById(userId);
 
     if (!user) {
       throw new UnauthorizedException();
     }
 
-    return {
-      user,
-    };
+    return user;
   }
 }
