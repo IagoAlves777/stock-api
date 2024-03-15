@@ -17,4 +17,4 @@ Este é um projeto desenvolvido usando o framework Nest.js. para o controle de u
 1. Clone este repositório para o seu ambiente local.
 2. Na pasta do projeto instale as dependencias utilizando `yarn` ou `npm install`.
 3. Inicie o projeto utilizando `yarn start` ou `npm run start`.
-4. Para ter acesso a documentação basta acessar [aqui](http://localhost:3334/api#/).
+4. Para ter acesso a documentação basta acessar o Swagger no link [http://localhost:3334/api#/](http://localhost:3334/api#/).
