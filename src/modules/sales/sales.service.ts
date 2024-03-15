@@ -1,10 +1,14 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateSaleDto } from './dto/create-sale.dto';
 import { PrismaService } from '@shared/prisma/prisma.service';
+import { ProductService } from '@modules/product/product.service';
 
 @Injectable()
 export class SalesService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly productService: ProductService,
+  ) {}
   async create(sale: CreateSaleDto) {
     try {
       const newSale = await this.prisma.sale.create({
@@ -23,6 +27,21 @@ export class SalesService {
           amount: product.amount,
         })),
       });
+
+      await Promise.all(
+        sale.products.map(async (product) => {
+          const oldProduct = await this.productService.findOne(product.id);
+
+          await this.prisma.product.update({
+            where: {
+              id: product.id,
+            },
+            data: {
+              amount: oldProduct.amount - product.amount,
+            },
+          });
+        }),
+      );
     } catch (error) {
       throw new BadRequestException({
         statusCode: 400,
